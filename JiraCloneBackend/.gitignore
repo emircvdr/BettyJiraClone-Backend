@@ -1,0 +1,25 @@
+# Rider ve .NET için uygun bir .gitignore
+### Rider ###
+.idea/
+.idea_modules/
+*.iml
+
+### ASP.NET ###
+bin/
+obj/
+*.user
+*.vspscc
+.vscode/
+.vs/
+
+# Logs
+*.log
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+Generated_Code/
