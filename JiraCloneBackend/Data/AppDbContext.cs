@@ -1,4 +1,5 @@
 using System.Reflection;
+using JiraCloneBackend.Migrations;
 using JiraCloneBackend.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ public class AppDbContext:DbContext
     {
     }
     public DbSet<User> Users { get; set; }
+    public DbSet<Workplace> Workplaces { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

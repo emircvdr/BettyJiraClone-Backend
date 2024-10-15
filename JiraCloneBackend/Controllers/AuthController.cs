@@ -77,11 +77,11 @@ public class AuthController : ControllerBase
         
         var token = GenerateJwtToken(user);
         
-        return Ok(new {Token = token});
+        return Ok(new {Token = token , UserId = user.Id});
     }
     
 
-    [HttpGet]
+    [HttpGet("GetList")]
     public IActionResult GetUsers()
     {
         var users = _context.Users.ToList();
@@ -110,10 +110,14 @@ public class AuthController : ControllerBase
         
         var token = GenerateJwtToken(user);
         
-        return Ok(new {Token = token});
+        return Ok(new {Token = token, UserId = user.Id});
         
     }
 
+    [HttpGet("GetUser/{id}")]
+    public IActionResult GetUser(int id) => Ok(_context.Users.FirstOrDefault(u => u.Id == id));
+    
+    
     // [HttpPut]
     // public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDTO updateUserDTO , int id)
     // {

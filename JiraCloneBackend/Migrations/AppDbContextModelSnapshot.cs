@@ -45,6 +45,26 @@ namespace JiraCloneBackend.Migrations
 
                     b.ToTable("Users");
                 });
+
+            modelBuilder.Entity("JiraCloneBackend.Models.Workplace", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("WorkplaceAdminId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkplaceName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Workplaces");
+                });
 #pragma warning restore 612, 618
         }
     }
