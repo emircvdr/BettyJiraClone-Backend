@@ -84,7 +84,15 @@ public class AuthController : ControllerBase
     [HttpGet("GetList")]
     public IActionResult GetUsers()
     {
-        var users = _context.Users.ToList();
+        var users = _context.Users
+            .Select(user => new ListUserDTO()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Username = user.Username
+            })
+            .ToList();
+
         return Ok(users);
     }
 

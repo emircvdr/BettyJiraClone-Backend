@@ -13,6 +13,8 @@ public class AppDbContext:DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Workplace> Workplaces { get; set; }
     
+    public DbSet<WorkplaceInvıte> WorkplaceInvıtes { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
