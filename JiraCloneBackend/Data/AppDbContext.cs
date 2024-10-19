@@ -12,8 +12,9 @@ public class AppDbContext:DbContext
     }
     public DbSet<User> Users { get; set; }
     public DbSet<Workplace> Workplaces { get; set; }
-    
     public DbSet<WorkplaceInvıte> WorkplaceInvıtes { get; set; }
+    
+    public DbSet<RelationWorkplace> RelationWorkplaces { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

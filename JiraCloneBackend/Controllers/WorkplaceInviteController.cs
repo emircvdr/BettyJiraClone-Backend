@@ -1,6 +1,7 @@
 using JiraCloneBackend.Data;
 using JiraCloneBackend.DTOs.WorkplaceInviteDTOs;
-using JiraCloneBackend.Models; // Modeli dahil etmeyi unutmayın
+using JiraCloneBackend.Models;
+using JiraCloneBackend.Services; // Modeli dahil etmeyi unutmayın
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,62 +9,41 @@ using Microsoft.EntityFrameworkCore;
 [Route("api/[controller]")]
 public class WorkplaceInviteController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly IWorkplaceInviteService _workplaceInviteService;
 
-    public WorkplaceInviteController(AppDbContext context)
+    public WorkplaceInviteController(IWorkplaceInviteService workplaceInviteService)
     {
-        _context = context;
+        _workplaceInviteService = workplaceInviteService;
     }
 
     [HttpPost("sendInvite")]
     public async Task<IActionResult> SendInvite([FromBody] SendInviteDTO dto)
     {
-        var invite = new WorkplaceInvıte
-        {
-            WorkplaceId = dto.WorkplaceId,
-            InvitedId = dto.InvitedId,
-            InvitedEmail = dto.InvitedEmail,
-            InvitedByUserId = dto.InvitedByUserId,
-            Status = "Pending",
-            CreatedAt = DateTime.UtcNow
-        };
+        var result = await _workplaceInviteService.SendWorkplaceInviteAsync(dto);
         
-        await _context.WorkplaceInvıtes.AddAsync(invite);
-        await _context.SaveChangesAsync();
-        
-        return Ok(invite);
+        return Ok(result);
     }
 
     [HttpPut("respondToInvite/{id}")]
     public async Task<IActionResult> RespondToInvite(int id, [FromBody] RespondeInviteDTO dto)
     {
-        var invite = await _context.WorkplaceInvıtes.FindAsync(id);
-        if (invite == null)
-        {
-            return NotFound();
-        }
-        invite.Status = dto.Status; 
-        invite.RespondedAt = DateTime.UtcNow;
+        var result = await _workplaceInviteService.RespondToInviteAsync(id, dto);
         
-        await _context.SaveChangesAsync();
-        
-        return Ok(invite);
+        return Ok(result);
     }
 
     [HttpGet("getInviteById/{id}")]
     public async Task<IActionResult> GetInviteById(int id)
     {
-        var invites = await _context.WorkplaceInvıtes
-            .Where(i => i.InvitedId == id && i.Status == "Pending")
-            .ToListAsync();
+        var result = await _workplaceInviteService.GetInviteByIdAsync(id);
 
-        return Ok(invites);
+        return Ok(result);
     }
 
     [HttpGet("getInvitesByUser/{id}")]
     public async Task<IActionResult> GetInvitesByUser(int id)
     {
-        var invites = await _context.WorkplaceInvıtes.Where(i => i.InvitedByUserId == id).ToListAsync();
-        return Ok(invites); 
+        var result = await _workplaceInviteService.GetInvitesByUser(id);
+        return Ok(result); 
     }
 }

@@ -1,5 +1,6 @@
 using System.Text;
 using JiraCloneBackend.Data;
+using JiraCloneBackend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +13,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//dependency injection 
+builder.Services.AddScoped<IWorkplaceInviteService, WorkplaceInviteService>();
+
+builder.Services.AddScoped<IWorkplaces, WorkplaceService>();
+
+builder.Services.AddScoped<IRelationWorkplace, RelationWorkplaceService>();
 
 // DbContext Configuration
 builder.Services.AddDbContext<AppDbContext>(options =>
