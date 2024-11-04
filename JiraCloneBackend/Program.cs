@@ -21,6 +21,8 @@ builder.Services.AddScoped<IWorkplaces, WorkplaceService>();
 
 builder.Services.AddScoped<IRelationWorkplace, RelationWorkplaceService>();
 
+builder.Services.AddScoped<IProjects, ProjectService>();
+
 // DbContext Configuration
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
